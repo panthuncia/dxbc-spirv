@@ -822,8 +822,13 @@ void SpirvBuilder::emitDclLds(const ir::Op& op) {
   auto typeId = getIdForType(op.getType());
   auto ptrTypeId = getIdForPtrType(typeId, spv::StorageClassWorkgroup);
 
-  pushOp(m_declarations, spv::OpVariable, ptrTypeId, varId,
-    spv::StorageClassWorkgroup, getIdForConstantNull(op.getType()));
+  if (m_options.zeroInitLds) {
+    pushOp(m_declarations, spv::OpVariable, ptrTypeId, varId,
+      spv::StorageClassWorkgroup, getIdForConstantNull(op.getType()));
+  } else {
+    pushOp(m_declarations, spv::OpVariable, ptrTypeId, varId,
+      spv::StorageClassWorkgroup);
+  }
 
   addEntryPointId(varId);
 }

@@ -33,6 +33,9 @@ public:
     bool dualSourceBlending = false;
     /** Whether FloatControls2 is fully supported */
     bool floatControls2 = false;
+    /** Whether to zero-initialize shared memory. D3D does not, but some
+     *  games read it before writing; some drivers fill it slowly. */
+    bool zeroInitLds = true;
     /** Supported rounding modes for the given float types */
     ir::RoundModes supportedRoundModesF16 = 0u;
     ir::RoundModes supportedRoundModesF32 = 0u;
